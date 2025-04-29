@@ -1,3 +1,4 @@
+#!/bin/bash
 sudo docker run -d \
   --name kafka-broker \
   --network crdp-cassandra-net \
