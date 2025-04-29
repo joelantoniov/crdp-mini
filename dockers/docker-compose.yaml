@@ -48,14 +48,18 @@ services:
     depends_on:
       kafka-broker:
         condition: service_healthy
-    command: >
-      bash -c "sleep 10 && for region in jakarta nyc london sydney saopaulo; do
-        /usr/bin/kafka-topics --create \
-        --bootstrap-server kafka-broker:9092 \
-        --replication-factor 1 \
-        --partitions 2 \
-        --topic crdp-sensors-\$${region} || true;
-      done"
+    command:
+      - bash
+      - -c
+      - |
+        sleep 60
+        for region in jakarta nyc london sydney saopaulo; do
+          /usr/bin/kafka-topics --create \
+            --bootstrap-server kafka-broker:9092 \
+            --replication-factor 1 \
+            --partitions 2 \
+            --topic crdp-sensors-$region || true
+        done
 
   # Single Cassandra container
   cassandra:
